@@ -1,0 +1,32 @@
+{
+  "name": "FrontEndBoilerplate",
+  "version": "0.0.0",
+  "description": "Test for Gulp",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "*",
+    "colors": "*",
+    "del": "*",
+    "gulp": "*",
+    "gulp-concat": "*",
+    "gulp-jshint": "*",
+    "gulp-less": "*",
+    "gulp-livereload": "*",
+    "gulp-rename": "*",
+    "gulp-sourcemaps": "*",
+    "gulp-uglify": "*",
+    "jshint-stylish": "*",
+    "less-plugin-autoprefix": "*",
+    "vinyl-buffer": "*",
+    "vinyl-source-stream": "*"
+  },
+  "dependencies": {
+    "jquery": "^2.1.3",
+    "underscore": "^1.7.0"
+  }
+}

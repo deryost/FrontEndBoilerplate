@@ -1,0 +1,12 @@
+*Thumbs.db
+*.DS_Store
+
+#node modules
+/node_modules
+
+# dist folder (this is where everything is compiled)
+/dist
+
+#sublime-text
+*.sublime-project
+*.sublime-workspace

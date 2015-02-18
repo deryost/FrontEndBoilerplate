@@ -1,0 +1,8 @@
+// https://github.com/jshint/jshint/blob/master/examples/.jshintrc
+{
+	"validthis" : true,
+	"strict" : true,
+	"indent" : 4,
+	"camelcase" : true,
+	"maxlen" : false // 80
+}
