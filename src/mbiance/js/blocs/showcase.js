@@ -34,6 +34,7 @@ function Showcase(mainContainer, slides, dotNav) {
 Showcase.prototype.onDotNavClick = function(e) {
 	this.restartTimer();
 	this.move($(e.target).index());
+	e.preventDefault();
 };
 
 // Move to a specific slide ID

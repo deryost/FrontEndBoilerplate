@@ -2,6 +2,7 @@ var cfg = {};
 
 cfg.src = {};
 cfg.src.dir = "./src/mbiance/";
+cfg.src.htmlDir = cfg.src.dir; // same as base
 cfg.src.jsDir = cfg.src.dir + "js/";
 cfg.src.imgDir = cfg.src.dir + "img/";
 cfg.src.cssDir = cfg.src.dir + "css/";
@@ -16,6 +17,7 @@ cfg.src.jsVendorsFiles = [cfg.src.jsDir + 'vendor/html5shiv.min.js', cfg.src.jsD
 
 cfg.dist = {};
 cfg.dist.dir = "./dist/";
+cfg.dist.htmlDir = cfg.dist.dir; // same as base
 cfg.dist.jsDir = cfg.dist.dir + "js/";
 cfg.dist.imgDir = cfg.dist.dir + "img/";
 cfg.dist.cssDir = cfg.dist.dir + "css/";

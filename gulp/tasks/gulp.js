@@ -11,6 +11,7 @@ var jshint = require('gulp-jshint');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var imagemin = require('gulp-imagemin');
+var htmlmin = require('gulp-htmlmin');
 var pngquant = require('imagemin-pngquant');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
@@ -22,7 +23,7 @@ var os = require("os");
 console.log("hostname: [" + os.hostname().grey.underline + "]" + " (" + "ajouté éventuellements des configs par utilisateur".bold.grey + ")");
 
 // Run --------------------------------------------------------------------
-gulp.task("run", ['img', 'css', 'js', 'jsLibs', 'watcher'], function(){});
+gulp.task("run", ['html', 'img', 'css', 'js', 'jsLibs', 'watch'], function(){});
 
 // clean --------------------------------------------------------------------
 gulp.task('clean', function () {
@@ -55,6 +56,13 @@ gulp.task('css', function () {
 		.pipe(rename({extname: cfg.dist.cssExtname})) // change extension
 		.pipe(sourcemaps.write('./')) // write the source map file at the same place
 		.pipe(gulp.dest(cfg.dist.cssDir));
+});
+
+// html --------------------------------------------------------------------
+gulp.task('html', function() {
+  gulp.src(cfg.src.htmlDir + '/**/*.html')
+    .pipe(htmlmin({collapseWhitespace: true, removeComments:true}))
+    .pipe(gulp.dest(cfg.dist.htmlDir))
 });
 
 // JS validation --------------------------------------------------------------------
@@ -95,8 +103,14 @@ gulp.task('jsLibs', function() {
 });
 
 
-// Watcher --------------------------------------------------------------------
-gulp.task('watcher', function () {
+// Watch --------------------------------------------------------------------
+gulp.task('watch', function () {
+
+	// Watch HTML
+	var watcherHTML = gulp.watch(cfg.src.htmlDir + '/**/*.html', ['html']);
+	watcherHTML.on('change', function(event) {
+		console.log('HTML File '+ event.path.green +' was '+ event.type.bgGreen.bold);
+	});
 
 	// Watch JS
 	var watcherJS = gulp.watch([cfg.src.jsDir + '/**/*.js', "!" + cfg.src.jsDir + '/**/vendor/*.js'], ['js']);
