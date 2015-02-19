@@ -12,7 +12,7 @@ cfg.src.lessMainFile.path = cfg.src.lessDir + cfg.src.lessMainFile.name ;
 cfg.src.jsMainFile = {};
 cfg.src.jsMainFile.name = "main.js";
 cfg.src.jsMainFile.path = cfg.src.jsDir + cfg.src.jsMainFile.name;
-cfg.src.jsVendorsFiles = [cfg.src.jsDir + 'vendor/html5shiv.min.js', cfg.src.jsDir + 'vendor/modernizr-2.8.3.min.js'];
+cfg.src.jsVendorsFiles = [cfg.src.jsDir + 'vendor/html5shiv.min.js', cfg.src.jsDir + 'vendor/respond.min.js', cfg.src.jsDir + 'vendor/modernizr-2.8.3.min.js'];
 
 cfg.dist = {};
 cfg.dist.dir = "./dist/";
@@ -29,7 +29,7 @@ cfg.dist.jsVendorsFile.dir = cfg.dist.jsDir + 'vendor/';
 cfg.dist.jsVendorsFile.path = cfg.dist.jsDir + cfg.dist.jsVendorsFile.name;
 
 // Check the compile files only
-cfg.livereloadPaths = ['./**/*.html', cfg.dist.jsDir + '**/*', cfg.dist.cssDir + '**/*'];
+cfg.livereloadPaths = ['./**/*.html', cfg.dist.jsDir + '**/*', cfg.dist.cssDir + '**/*', cfg.dist.imgDir + '**/*'];
 
 cfg.jshintPaths = ['!' + cfg.src.jsDir + 'vendor/*.js', cfg.src.jsDir + '**/*.js'],
 

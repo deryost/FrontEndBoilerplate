@@ -1,0 +1,76 @@
+// expertiseAndSolutions container------------------------------------
+#expertiseAndSolutions{
+	.clearfix;
+	@media @screenMD, @screenBG {
+		background: @color-blue url('@{path-img}/bgRightGrey.png') repeat-y center;
+	} 
+	> .container{
+		@media @screenTN { 
+			width: 100%;
+		}
+
+		@media @screenSM { 
+			width: 100%;
+		}
+		.fullContainer-MD;
+		.fullContainer-BG;
+	}
+
+	#expertise, #solutions {
+		box-sizing: border-box;
+		.clearfix();
+
+		& > .container {
+			box-sizing: border-box;
+			color: #fff;
+			
+			@media @screenSM{ 
+				width: @screen-width-SM;
+				margin: 0 auto;
+				padding: 20px 0;
+			}
+
+			& > .title{
+				.twoLinesTitle(#fff);
+			}
+
+			& > .desc{
+				.font(16px, 22px);
+			}
+		}
+	}
+}
+
+// expertise ------------------------------------
+#expertise{
+	background-color: @color-blue;
+
+	@media @screenTN, @screenSM{ 
+		width: 100%;
+		padding: 20px;
+	}
+
+	@media @screenMD, @screenBG { 
+		float: left;
+		width: 66.6666666%;
+		padding: 40px 40px 40px 0;
+	}
+}
+
+// solutions ------------------------------------
+#solutions{
+	background-color: @color-grey;
+	
+	
+
+	@media @screenTN, @screenSM{ 
+		width: 100%;	
+		padding: 20px;
+	}
+
+	@media @screenMD, @screenBG { 
+		float: left;
+		width: 33.33333%;
+		padding: 40px;
+	}
+}

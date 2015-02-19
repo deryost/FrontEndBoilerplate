@@ -5,12 +5,13 @@ $ = require('jquery');
 // JSMediaQueries class
 function JSMediaQueries() {
 	this.cssMediaQuery;
-	this.cssBreakPointsName;
+	this.cssBreakPointsNames;
+	this.currentBreakPointName;
 }
 
 // Init the module
 JSMediaQueries.prototype.init = function(breakPoints) {
-	this.cssBreakPointsName = breakPoints;
+	this.cssBreakPointsNames = breakPoints;
 	
 	this.cssMediaQuery = $('<div id="JSMediaQueries"></div>'); // This must be style correctly in your css
     $("body").append(this.cssMediaQuery);
@@ -22,9 +23,10 @@ JSMediaQueries.prototype.init = function(breakPoints) {
 // On Change
 JSMediaQueries.prototype.onChange = function() {
 	var index = parseInt(this.cssMediaQuery.css("width"));
-	var breakPointName = this.cssBreakPointsName[index];
-	if(breakPointName){
-		$(document).trigger("JSMediaQueries.changeState", [breakPointName]); // Trigger a global event
+	var oldBreakPointName = this.currentBreakPointName;
+	this.currentBreakPointName = this.cssBreakPointsNames[index];
+	if(this.currentBreakPointName && oldBreakPointName != this.currentBreakPointName){
+		$(document).trigger("JSMediaQueries.changeState", [this.currentBreakPointName]); // Trigger a global event
 	}
 };
 

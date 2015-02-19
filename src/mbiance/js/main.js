@@ -10,9 +10,11 @@ $(document).ready(function() {
 	var avoidConsoleErrors = require('./utils/avoidConsoleErrors');
 	avoidConsoleErrors();
 
-	// Simulate N child selector
+	// Simulate N child selector (FIX for IE8)
 	var simulateNthChild = require('./utils/simulateNthChild');
-	simulateNthChild("table.simulateNthChild", "tr", "n", 3);
+	simulateNthChild(".sectorsList", ".sector", "n4_", 4);
+	simulateNthChild(".sectorsList", ".sector", "n3_", 3);
+	simulateNthChild(".sectorsList", ".sector", "n2_", 2);
 
 	// JSMediaQueries
 	var JSMediaQueries = require('./utils/JSMediaQueries');
@@ -24,8 +26,15 @@ $(document).ready(function() {
     var responsiveDOM = new ResponsiveDOM();
     responsiveDOM.init();
 
-     // jQuery MatchHeight plugin
-    $("#matchHeight .match").matchHeight(); 
+    // jQuery MatchHeight plugin
+    $("#expertise, #solutions").matchHeight();
+	$(".sectorsList .sector").matchHeight();
+
+    // Showcase
+    var Showcase = require('./blocs/showcase');
+    var scContainer = $('#showcase');
+    var showcase = new Showcase(scContainer, scContainer.find('.slide'), scContainer.find('.nav a'));
+
 });
 
 // Document loaded

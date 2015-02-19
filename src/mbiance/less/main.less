@@ -1,6 +1,7 @@
-@import (inline) "normalize.css"; // inline : include the source file in the output but do not process it
+@import (inline) "libs/normalize.css"; // inline : include the source file in the output but do not process it
+@import "libs/mixins"; // General mixins and guards
 @import "variables";
-@import "mixins"; // Mixins and guards
+@import "mixins"; // Project mixins and guards
 @import "tags";
 @import "reusable"; // Reusable classes
 
@@ -9,4 +10,10 @@
 @import "layout-content"; // Design elements on every pages (content)
 @import "layout-footer"; // Design elements on every pages (footer)
 
+// Blocs pour la page d'accueil
 @import "blocs/showcase";
+@import "blocs/expertiseAndSolutions";
+@import "blocs/contactCTA";
+@import "blocs/sectorsHighlight";
+@import "blocs/portfolioHighlight";
+@import "blocs/blogHighlight";

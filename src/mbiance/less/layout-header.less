@@ -4,6 +4,66 @@
 	.clearfix();
 	background-color: #fff;
 	> .container{
-		.fullContainer;
+		.fullContainer-all;
+		position: relative;
+		
+		// logo
+		> .logo {
+			display: block;
+			&:after {
+				
+				content: url('@{path-img}/logo.png');
+				.size(237px, 41px);
+				display: block;
+				@media @screenTN, @screenSM { 
+					margin: auto;
+					padding: 10px 0;
+				}
+				@media @screenMD, @screenBG { 
+					padding: 30px 0;
+				}
+			}
+			@media @screenTN, @screenSM { 
+				margin: 0 auto;
+			}
+			@media @screenMD, @screenBG { 
+				
+			}
+		}
+
+		// logo
+		> .construction	{
+			color: @color-subtle;
+			font-size: 12px;
+			text-transform: uppercase;
+			
+			@media @screenTN, @screenSM { 
+				text-align: center;
+				padding-bottom: 5px;
+			}
+			@media @screenMD, @screenBG { 
+				position: absolute;
+				top: 15px;
+				right: 0px;
+			}
+		}
+
+		// slogan
+		> .slogan	{
+			color: @color-grey;
+			font-size: 16px;
+			text-transform: uppercase;
+			font-weight: bold;
+
+			@media @screenTN, @screenSM { 
+				text-align: center;
+				padding-bottom: 10px;
+			}
+			@media @screenMD, @screenBG { 
+				position: absolute;
+				top: 50px;
+				right: 0px;
+			}
+		}
 	}
 }

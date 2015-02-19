@@ -10,6 +10,8 @@ var rename = require("gulp-rename");
 var jshint = require('gulp-jshint');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
+var imagemin = require('gulp-imagemin');
+var pngquant = require('imagemin-pngquant');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var sourcemaps = require('gulp-sourcemaps');
@@ -19,12 +21,23 @@ var os = require("os");
 // Log
 console.log("hostname: [" + os.hostname().grey.underline + "]" + " (" + "ajouté éventuellements des configs par utilisateur".bold.grey + ")");
 
-// Default --------------------------------------------------------------------
-gulp.task("default", ['css', 'js', 'jsLibs', 'watcher'], function(){});
+// Run --------------------------------------------------------------------
+gulp.task("run", ['img', 'css', 'js', 'jsLibs', 'watcher'], function(){});
 
-// clear --------------------------------------------------------------------
-gulp.task('cleanDist', function () {
+// clean --------------------------------------------------------------------
+gulp.task('clean', function () {
 	del([cfg.dist.dir]);
+});
+
+// Images --------------------------------------------------------------------
+gulp.task('img', function () {
+	return gulp.src(cfg.src.imgDir + '/**/*.*')
+		.pipe(imagemin({
+			progressive: true,
+			svgoPlugins: [{removeViewBox: false}],
+			use: [pngquant()]
+		}))
+		.pipe(gulp.dest(cfg.dist.imgDir));
 });
 
 // Less / CSS --------------------------------------------------------------------
@@ -85,21 +98,33 @@ gulp.task('jsLibs', function() {
 // Watcher --------------------------------------------------------------------
 gulp.task('watcher', function () {
 
+	// Watch JS
 	var watcherJS = gulp.watch([cfg.src.jsDir + '/**/*.js', "!" + cfg.src.jsDir + '/**/vendor/*.js'], ['js']);
 	watcherJS.on('change', function(event) {
 		console.log('Js File '+ event.path.green +' was '+ event.type.bgGreen.bold);
 	});
 
+	// Watch JS vendors
 	var watcherJS = gulp.watch(cfg.src.jsDir + '/**/vendor/*.js', ['jsLibs']);
 	watcherJS.on('change', function(event) {
 		console.log('Js [vendors] File '+ event.path.green +' was '+ event.type.bgGreen.bold);
 	});
 
+	// Watch CSS
 	var watcherCSS = gulp.watch(cfg.src.lessDir + '/**/*.less', ['css']);
 	watcherCSS.on('change', function(event) {
 		console.log('Css File '+ event.path.green +' was '+ event.type.bgGreen.bold);
 	});
 
+	// Watch Images
+	var watcherIMG = gulp.watch(cfg.src.imgDir + '/**/*.*', ['img']);
+	watcherIMG.on('change', function(event) {
+		console.log('Image File '+ event.path.green +' was '+ event.type.bgGreen.bold);
+	});
+
 	livereload.listen();
-  	gulp.watch(cfg.livereloadPaths).on('change', livereload.changed);
+  	gulp.watch(cfg.livereloadPaths).on('change', function(event) {
+		console.log('livereload.changed');
+		livereload.changed(event);
+	});
 });

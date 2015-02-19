@@ -1,0 +1,103 @@
+// sectorsHighlight
+#sectorsHighlight {	
+	box-sizing: border-box;
+	.clearfix();
+	background-color: #fff;
+	color: #000;
+	> .container{
+		.fullContainer-all;
+		position: relative;
+
+		> .strikeTitle{
+			.strikeTitle(@color: #000);
+			padding: 50px 0 30px;
+		}
+
+		> .summary{
+			.font(16px, 26px, normal, italic);
+			color: #888888;
+			
+			text-align: center;
+			margin: 0 auto;
+			padding-bottom: 20px;
+			@media @screenTN, @screenSM { 
+				width: 90%;
+			}
+			@media @screenMD { 
+				width: 70%;
+			}
+			@media @screenBG { 
+				width: 50%;
+			}
+		}
+
+		> .sectorsList{
+			overflow: hidden;
+			> .sector{
+				
+				box-sizing: border-box;
+				.clearfix;
+				@media @screenTN { 
+					width: 100%;
+					margin-bottom: 2%;
+				}
+
+				@media @screenSM { 
+					width: ((100% - (2%*1) ) / 2);
+					margin-right: 2%;
+					margin-bottom: 2%;
+					float: left;
+					&.n2_2{margin-right: 0%;} // js class patch for IE8
+					&:nth-child(2n+0){margin-right: 0%;}
+				}
+
+				@media @screenMD { 
+					width: ((100% - (2%*2) ) / 3);
+					margin-right: 2%;
+					margin-bottom: 2%;
+					float: left;
+					&.n3_3{margin-right: 0%;} // js class patch for IE8
+					&:nth-child(3n+0){margin-right: 0%;}
+					//background-color: rgba(255, 0, 255, .2);
+				}
+
+				@media @screenBG { 
+					width: ((100% - (2%*3) ) / 4);
+					margin-right: 2%;
+					margin-bottom: 2%;
+					float: left;
+					&.n4_4{margin-right: 0%;} // js class patch for IE8
+					&:nth-child(4n+0){margin-right: 0%;}
+					//background-color: rgba(0, 0, 255, .2);
+				}
+
+
+				> .icon{
+					float: left;
+					margin-right: 10px;
+					margin-bottom: 10px;
+				}
+
+				> .title{
+					box-sizing: border-box;
+					height: 65px;
+					max-width: 200px;
+					display: table;
+					> h3{
+						display: table-cell;
+						vertical-align: middle;
+						.font(12px, 16px, bold);
+						text-transform: uppercase;
+					}
+				}
+
+				> .desc{
+					clear: left;
+					.clearfix;
+					color: #888888;
+					.font(12px, 18px, normal);
+				}
+			}
+		}
+	}
+}

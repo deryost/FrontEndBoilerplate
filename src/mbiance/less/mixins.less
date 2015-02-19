@@ -1,92 +1,126 @@
-// gradient
-.gradient (@startColor: #eee, @endColor: white) {
-	background-color: @startColor;
-	background: -webkit-gradient(linear, left top, left bottom, from(@startColor), to(@endColor));
-	background: -webkit-linear-gradient(top, @startColor, @endColor);
-	background: -moz-linear-gradient(top, @startColor, @endColor);
-	background: -ms-linear-gradient(top, @startColor, @endColor);
-	background: -o-linear-gradient(top, @startColor, @endColor);
+// fullContainer-all
+.fullContainer-all{
+	.fullContainer-TN;
+	.fullContainer-SM;
+	.fullContainer-MD;
+	.fullContainer-BG;
 }
 
-// horizontal-gradient
-.horizontal-gradient (@startColor: #eee, @endColor: white) {
- 	background-color: @startColor;
-	background-image: -webkit-gradient(linear, left top, right top, from(@startColor), to(@endColor));
-	background-image: -webkit-linear-gradient(left, @startColor, @endColor);
-	background-image: -moz-linear-gradient(left, @startColor, @endColor);
-	background-image: -ms-linear-gradient(left, @startColor, @endColor);
-	background-image: -o-linear-gradient(left, @startColor, @endColor);
-}
-
-// clearfix mixin
-.clearfix() {
-	&:before,
-	&:after {
-	    content: "";
-	    display: table;
-	}
-	&:after {
-	    clear: both;
-	}
-	*zoom: 1;
-}
-
-// size mixin
-.size(@size) {
-	width: @size;
-	height: @size;
-}
-
-.size(@width, @height) {
-	width: @width;
-	height: @height;
-}
-
-// transition mixin
-.transition (@transition) {
-	-webkit-transition: @transition;
-	-moz-transition: @transition;
-	-ms-transition: @transition;
-	-o-transition: @transition;
-	transition: @transition;
-}
-
-// remove the transition 
-.notransition() {
-	-webkit-transition: none;
-	-moz-transition: none;
-	-ms-transition: none;
-	-o-transition: none;
-	transition: none;
-}
-
-// jshide
-.jshide {
-	display: none;
-}
-
-// fullContainer
-.fullContainer{
+// fullContainerBase
+.fullContainerBase(){
 	box-sizing: border-box;
 	overflow: hidden;
 	margin: 0 auto;
-	/*@media @screenTN, @screenSM, @screenMD, @screenBG { 
-		
-	}*/
+	.transition(width .3s ease-out);
+}
+
+// fullContainer-TN
+.fullContainer-TN{
 	@media @screenTN { 
-		background-color: #f00;
+		.fullContainerBase();
+		//background-color: rgba(255, 0, 0, 0.2);
 		width: 100%;
+		padding-left: 20px;
+		padding-right: 20px;
 	}
+}
+
+// fullContainer-SM
+.fullContainer-SM{
 	@media @screenSM { 
-		background-color: #0f0;
-		width: 600px;
+		.fullContainerBase();
+		//background-color: rgba(0, 255, 0, 0.2);
+		width: @screen-width-SM;
 	}
-	@media @screenMD { 
-		background-color: #00f;
-		width: 800px;
+}
+
+// fullContainer-MD
+.fullContainer-MD{
+	@media @screenMD {
+		.fullContainerBase(); 
+		//background-color: rgba(0, 0, 255, 0.2);
+		width: @screen-width-MD;
 	}
+}
+
+// fullContainer-BG
+.fullContainer-BG{
 	@media @screenBG { 
-		background-color: #f0f;
-		width: 1200px;
+		.fullContainerBase(); 
+		//background-color: rgba(255, 0, 0, 0.2);
+		width: @screen-width-BG;
 	}
+}
+
+// font
+.font(@fontSize : 14px, @lineHeight: 18px, @fontWeight : normal, @fontStyle : normal){
+	font-size:  @fontSize;
+	line-height: @lineHeight;
+	font-weight: @fontWeight;
+	font-style: @fontStyle;
+}
+
+// twoLinesTitle
+.twoLinesTitle(@color: #fff){
+	color: @color;
+	.font(30px, 30px, bold, normal);
+	text-transform: uppercase;
+	&:first-line{
+		.font(15px, 25px, normal, italic);
+		text-transform: none;
+	}
+
+	border-bottom: 1px solid @color;
+	padding-bottom: 10px;
+	margin-bottom: 20px;
+}
+
+// strikeTitle
+.strikeTitle(@color: #000){
+	
+	text-align: center;
+
+	> h1, > h2, > h3, > h4, > h5, > h6{
+		.font(24px, 24px, bold);
+		text-transform: uppercase;
+		margin: 0; padding: 0;
+		vertical-align: text-bottom;
+		color: @color;
+
+		&:before, &:after{
+			content:"";
+			display: inline-block;
+			background-color: @color-pink;
+			
+			position: relative;
+			vertical-align: text-top;
+			top: 12px;
+			@media @screenTN{
+				.size(10px, 3px);
+			}
+			@media @screenSM{
+				.size(75px, 1px);
+			}
+			@media @screenMD, @screenBG{
+				.size(100px, 1px);
+			}
+		}
+		&:before{
+			@media @screenTN{
+				margin-right: 10px;
+			}
+			@media @screenSM, @screenMD, @screenBG{
+				margin-right: 30px;
+			}
+		}
+		&:after{
+			@media @screenTN{
+				margin-left: 10px;
+			}
+			@media @screenSM, @screenMD, @screenBG{
+				margin-left: 30px;
+			}
+		}
+	}
+
 }
