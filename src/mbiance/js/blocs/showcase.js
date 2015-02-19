@@ -1,6 +1,7 @@
 "use strict";
 
 $ = require('jquery');
+var gsap = require('gsap');
 
 // Showcase class
 function Showcase(mainContainer, slides, dotNav) {
@@ -46,6 +47,10 @@ Showcase.prototype.move = function(slideId) {
 		if(this.currentSlide == i){
 			slide.show();
 			dotNav.addClass("active");
+			var img = this.mainContainer.find("img");
+			img.css("opacity", 0);
+			TweenMax.to(this.mainContainer, 1, {backgroundColor: slide.data("color")});
+			TweenMax.to(img, 1, {opacity: 1, delay: .5});
 		} else {
 			slide.hide();
 			dotNav.removeClass("active");

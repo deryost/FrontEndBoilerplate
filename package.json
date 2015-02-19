@@ -12,6 +12,7 @@
     "browserify": "*",
     "colors": "*",
     "del": "*",
+    "gsap": "^1.15.1",
     "gulp": "*",
     "gulp-concat": "*",
     "gulp-htmlmin": "^1.1.0",
@@ -29,6 +30,7 @@
     "vinyl-source-stream": "*"
   },
   "dependencies": {
+    "gsap": "^1.15.1",
     "jquery": "^1.*",
     "underscore": "^1.7.0"
   }
