@@ -10,6 +10,7 @@ var rename = require("gulp-rename");
 var jshint = require('gulp-jshint');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
+var plumber = require('gulp-plumber');
 var imagemin = require('gulp-imagemin');
 var htmlmin = require('gulp-htmlmin');
 var pngquant = require('imagemin-pngquant');
@@ -33,6 +34,7 @@ gulp.task('clean', function () {
 // Images --------------------------------------------------------------------
 gulp.task('img', function () {
 	return gulp.src(cfg.src.imgDir + '/**/*.*')
+		.pipe(plumber({errorHandler: plumberErrCatch}))
 		.pipe(imagemin({
 			progressive: true,
 			svgoPlugins: [{removeViewBox: false}],
@@ -45,6 +47,7 @@ gulp.task('img', function () {
 gulp.task('css', function () {
 	//
 	gulp.src(cfg.src.lessMainFile.path)
+		.pipe(plumber({errorHandler: plumberErrCatch}))
 		.pipe(sourcemaps.init({loadMaps: true, debug: true}))
 		.pipe(less({
 			compress: true,
@@ -61,6 +64,7 @@ gulp.task('css', function () {
 // html --------------------------------------------------------------------
 gulp.task('html', function() {
   gulp.src(cfg.src.htmlDir + '/**/*.html')
+  	.pipe(plumber({errorHandler: plumberErrCatch}))
     .pipe(htmlmin({collapseWhitespace: true, removeComments:true}))
     .pipe(gulp.dest(cfg.dist.htmlDir))
 });
@@ -68,6 +72,7 @@ gulp.task('html', function() {
 // JS validation --------------------------------------------------------------------
 gulp.task('jshint', function() {
 	gulp.src(cfg.jshintPaths)
+		.pipe(plumber({errorHandler: plumberErrCatch}))
 		.pipe(jshint({strict: true}))
 		//.pipe(jshint.reporter('default'))
 		.pipe(jshint.reporter('jshint-stylish')) 
@@ -81,7 +86,9 @@ gulp.task('jshint', function() {
 // https://github.com/gulpjs/gulp/blob/master/docs/recipes/browserify-uglify-sourcemap.md	
 // http://viget.com/extend/gulp-browserify-starter-faq
 gulp.task('js', function() {
-	return browserify(cfg.src.jsMainFile.path)
+	return 
+		pipe(plumber({errorHandler: plumberErrCatch}))
+		.browserify(cfg.src.jsMainFile.path)
 		.bundle()
 		.pipe(source(cfg.dist.jsMainFile.name))
 		.pipe(buffer())
@@ -95,6 +102,7 @@ gulp.task('js', function() {
 gulp.task('jsLibs', function() {
 	// cfg.src.jsVendorsFiles
 	gulp.src(cfg.src.jsVendorsFiles)
+		.pipe(plumber({errorHandler: plumberErrCatch}))
 		.pipe(sourcemaps.init({loadMaps: true}))
 		.pipe(uglify())
 		.pipe(concat(cfg.dist.jsVendorsFile.name))
@@ -142,3 +150,10 @@ gulp.task('watch', function () {
 		livereload.changed(event);
 	});
 });
+
+
+// Plumber catch function --------------------------------------------------------------------
+function plumberErrCatch(err) {
+	console.log("[" +err.plugin.toString().red + "] " + err.message.toString().bgRed);
+	this.emit('end');
+}

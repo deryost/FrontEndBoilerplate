@@ -20,6 +20,7 @@
     "gulp-jshint": "*",
     "gulp-less": "*",
     "gulp-livereload": "*",
+    "gulp-plumber": "^0.6.6",
     "gulp-rename": "*",
     "gulp-sourcemaps": "*",
     "gulp-uglify": "*",
