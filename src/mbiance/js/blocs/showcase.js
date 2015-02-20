@@ -1,7 +1,10 @@
 "use strict";
 
 $ = require('jquery');
-var gsap = require('gsap');
+var TweenLite = require('./../vendor/greensock/TweenLite');
+var TimelineLite = require('./../vendor/greensock/TimelineLite');
+var CSSPlugin = require('./../vendor/greensock/plugins/CSSPlugin');
+//var ColorPropsPlugin = require('./../vendor/greensock/plugins/ColorPropsPlugin');
 
 // Showcase class
 function Showcase(mainContainer, slides, dotNav) {
@@ -48,9 +51,31 @@ Showcase.prototype.move = function(slideId) {
 			slide.show();
 			dotNav.addClass("active");
 			var img = this.mainContainer.find("img");
+			var projectName = this.mainContainer.find(".projectName");
+			var title = this.mainContainer.find(".title");
+			var desc = this.mainContainer.find(".desc");
+			
 			img.css("opacity", 0);
-			TweenMax.to(this.mainContainer, 1, {backgroundColor: slide.data("color")});
-			TweenMax.to(img, 1, {opacity: 1, delay: .5});
+			projectName.css("opacity", 0);
+			title.css("opacity", 0);
+			desc.css("opacity", 0);
+
+			//TweenLite.killTweensOf(this.mainContainer);
+			//TweenLite.killTweensOf(img);
+			if(typeof this.changeSlideTimeline != 'undefined') this.changeSlideTimeline.kill();
+			this.changeSlideTimeline = new TimelineLite();
+			this.changeSlideTimeline.add([
+				TweenLite.to(this.mainContainer, 1, {backgroundColor: slide.data("color")}),
+				//TweenLite.to(img, 0.01, {opacity: 0}),
+				TweenLite.to(img, 1, {opacity: 1, delay: 1}),
+				TweenLite.to(projectName, 0.01, {x: "+=100"}),
+				TweenLite.to(projectName, 1, {opacity: 1, x: 0, delay: .3}),
+				TweenLite.to(title, 0.01, {x: "+=200"}),
+				TweenLite.to(title, 1, {opacity: 1,  x: 0, delay: .5}),
+				TweenLite.to(desc, 0.01, {x: "+=300"}),
+				TweenLite.to(desc, 1, {opacity: 1, x: 0, delay: .7})
+			]);
+			
 		} else {
 			slide.hide();
 			dotNav.removeClass("active");

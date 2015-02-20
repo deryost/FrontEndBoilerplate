@@ -65,9 +65,11 @@
 	color: @color;
 	.font(30px, 30px, bold, normal);
 	text-transform: uppercase;
+	font-family: @font-important-bold;
 	&:first-line{
-		.font(15px, 25px, normal, italic);
+		.font(20px, 30px, normal, italic);
 		text-transform: none;
+		font-family: @font-important-light;
 	}
 
 	border-bottom: 1px solid @color;
@@ -123,4 +125,22 @@
 		}
 	}
 
+}
+
+// transparent button
+.buttonTrans(){
+	.transition(background-color .9s ease-out);
+	color: #fff;
+	display: inline-block;
+	border: 1px solid #fff;
+	border-radius: 20px;
+	padding: 8px 25px;
+	.font(16px, 20px);
+	font-family: @font-important-bold;
+	text-align: center;
+	&:hover{
+		text-decoration:none;
+		background-color: rgba(255,255,255,.5);
+		.transition(background-color .2s ease-out);
+	}
 }

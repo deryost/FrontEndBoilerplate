@@ -24,7 +24,7 @@ var os = require("os");
 console.log("hostname: [" + os.hostname().grey.underline + "]" + " (" + "ajouté éventuellements des configs par utilisateur".bold.grey + ")");
 
 // Run --------------------------------------------------------------------
-gulp.task("run", ['html', 'img', 'css', 'js', 'jsLibs', 'watch'], function(){});
+gulp.task("run", ['html', 'img', 'copyfonts', 'css', 'js', 'jsLibs', 'watch'], function(){});
 
 // clean --------------------------------------------------------------------
 gulp.task('clean', function () {
@@ -41,6 +41,13 @@ gulp.task('img', function () {
 			use: [pngquant()]
 		}))
 		.pipe(gulp.dest(cfg.dist.imgDir));
+});
+
+// Copy fonts --------------------------------------------------------------------
+gulp.task('copyfonts', function() {
+	gulp.src(cfg.src.fontsDir + '/**/*.{ttf,woff,eof,eot,svg}')
+	.pipe(plumber({errorHandler: plumberErrCatch}))
+	.pipe(gulp.dest(cfg.dist.fontsDir));
 });
 
 // Less / CSS --------------------------------------------------------------------
@@ -86,9 +93,7 @@ gulp.task('jshint', function() {
 // https://github.com/gulpjs/gulp/blob/master/docs/recipes/browserify-uglify-sourcemap.md	
 // http://viget.com/extend/gulp-browserify-starter-faq
 gulp.task('js', function() {
-	return 
-		pipe(plumber({errorHandler: plumberErrCatch}))
-		.browserify(cfg.src.jsMainFile.path)
+	return browserify(cfg.src.jsMainFile.path)
 		.bundle()
 		.pipe(source(cfg.dist.jsMainFile.name))
 		.pipe(buffer())
@@ -102,6 +107,7 @@ gulp.task('js', function() {
 gulp.task('jsLibs', function() {
 	// cfg.src.jsVendorsFiles
 	gulp.src(cfg.src.jsVendorsFiles)
+		.pipe(plumber({errorHandler: plumberErrCatch}))
 		.pipe(plumber({errorHandler: plumberErrCatch}))
 		.pipe(sourcemaps.init({loadMaps: true}))
 		.pipe(uglify())
@@ -130,6 +136,12 @@ gulp.task('watch', function () {
 	var watcherJS = gulp.watch(cfg.src.jsDir + '/**/vendor/*.js', ['jsLibs']);
 	watcherJS.on('change', function(event) {
 		console.log('Js [vendors] File '+ event.path.green +' was '+ event.type.bgGreen.bold);
+	});
+
+	// Watch Fonts
+	var watcherFonts = gulp.watch(cfg.src.fontsDir + '/**/*.{ttf,woff,eof,eot,svg}', ['copyfonts']);
+	watcherFonts.on('change', function(event) {
+		console.log('Fonts File '+ event.path.green +' was '+ event.type.bgGreen.bold);
 	});
 
 	// Watch CSS
