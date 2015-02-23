@@ -81,6 +81,10 @@ Showcase.prototype.move = function(slideId) {
 			title.css("opacity", 0);
 			desc.css("opacity", 0);
 
+			projectName.css("color", slide.data("textcolor"));
+			title.css("color", slide.data("textcolor"));
+			desc.css("color", slide.data("textcolor"));
+
 			//TweenLite.killTweensOf(this.mainContainer);
 			//TweenLite.killTweensOf(img);
 			if(typeof this.changeSlideTimeline != 'undefined') this.changeSlideTimeline.kill();
