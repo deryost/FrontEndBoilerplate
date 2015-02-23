@@ -30,4 +30,4 @@ JSMediaQueries.prototype.onChange = function() {
 	}
 };
 
-module.exports = JSMediaQueries;
+module.exports = new JSMediaQueries();

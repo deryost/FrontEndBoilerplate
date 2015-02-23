@@ -1,6 +1,7 @@
 "use strict";
 
 $ = require('jquery');
+var jsMediaQueries = require('./../utils/JSMediaQueries');
 var TweenLite = require('./../vendor/greensock/TweenLite');
 var TimelineLite = require('./../vendor/greensock/TimelineLite');
 var CSSPlugin = require('./../vendor/greensock/plugins/CSSPlugin');
@@ -32,7 +33,27 @@ function Showcase(mainContainer, slides, dotNav) {
 
 	// Click on the dots
 	this.dotNav.on("click.dotNav", $.proxy(this.onDotNavClick, this));
+
+	this.loadImages();
+
+	$(window).on("JSMediaQueries.changeState", $.proxy(this.loadImages, this));
 }
+
+// Load the right image
+Showcase.prototype.loadImages = function() {
+
+	for(var i=0; i<this.slidesCount; i++){
+		var slide = this.slides.eq(i);
+		var img = slide.find("img");
+
+		var newsrc = slide.data("image" + jsMediaQueries.currentBreakPointName.toLowerCase());
+
+		if(img.attr("src") != newsrc){
+			img.attr("src", newsrc);
+			//console.log(newsrc);
+		}
+	}
+};
 
 // Click on the dots
 Showcase.prototype.onDotNavClick = function(e) {
@@ -50,10 +71,10 @@ Showcase.prototype.move = function(slideId) {
 		if(this.currentSlide == i){
 			slide.show();
 			dotNav.addClass("active");
-			var img = this.mainContainer.find("img");
-			var projectName = this.mainContainer.find(".projectName");
-			var title = this.mainContainer.find(".title");
-			var desc = this.mainContainer.find(".desc");
+			var img = slide.find("img");
+			var projectName = slide.find(".projectName");
+			var title = slide.find(".title");
+			var desc = slide.find(".desc");
 			
 			img.css("opacity", 0);
 			projectName.css("opacity", 0);

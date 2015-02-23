@@ -14,25 +14,37 @@
 
 	color: #fff;
 	> .container{
-		.fullContainer-all;
+		.fullContainer-SM;
+		.fullContainer-MD;
+		.fullContainer-BG;
 
 		> .col1{
-			width: 50%;
-			float: left;
+			
 			box-sizing: border-box;
 			.clearfix();
-			padding: 40px;
-			background-color: rgba(0,0,0,.2);
-			height: 309px;
+			
+			
 			@media @screenTN{
-				display: none;
+				background-color: #444;
+				padding: 20px;
+			}
+			@media @screenSM, @screenMD, @screenBG{
+				background-color: rgba(0,0,0,.2);
+				width: 50%;
+				float: left;
+				height: 309px;
+				padding: 40px;
 			}
 			> .testimony{
 				
 				font-family: @font-important-light;
 
 				p:first-of-type{margin-top: 0;}
-
+				p:last-of-type{margin-bottom: 0;}
+				
+				@media @screenTN{
+					.font(14px, 18px);
+				}
 				@media @screenSM{
 					.font(14px, 18px);
 				}
@@ -48,10 +60,16 @@
 		> .col2{
 			box-sizing: border-box;
 			.clearfix();
-			width: 50%;
-			float: left;
-			padding: 40px;
-			//border: 1px solid red;
+			@media @screenTN{
+				padding: 20px;
+				background-color: #222;
+			}
+			@media @screenSM, @screenMD, @screenBG{
+				width: 50%;
+				float: left;
+				height: 309px;
+				padding: 40px;
+			}
 			> .contactInfos {
 				h3{
 					text-transform: uppercase; 
@@ -68,6 +86,21 @@
 						.font(14px, 20px); 
 					}
 					color: #999;
+				}
+				> .social{
+					margin-top: 20px;
+					> .facebook, > .twitter{
+						display: inline-block;
+						position: relative;
+						margin-right: 5px;
+						left: -10px;
+						.size(32px);
+						&:hover{
+							opacity: .8;
+						}
+						&.facebook{background: url('@{path-img}/footer-logo-facebook.png') no-repeat center;}
+						&.twitter{background: url('@{path-img}/footer-logo-twitter.png') no-repeat center; top: 1px;}
+					}
 				}
 			}
 		}

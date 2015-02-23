@@ -9,8 +9,9 @@
 // fullContainerBase
 .fullContainerBase(){
 	box-sizing: border-box;
-	overflow: hidden;
+	//overflow: hidden;
 	margin: 0 auto;
+	.clearfix();
 	.transition(width .3s ease-out);
 }
 
@@ -97,8 +98,12 @@
 			position: relative;
 			vertical-align: text-top;
 			top: 12px;
+			@media only screen and (max-width: 400px) {
+				display: none;
+			}
 			@media @screenTN{
 				.size(10px, 3px);
+				//
 			}
 			@media @screenSM{
 				.size(75px, 1px);

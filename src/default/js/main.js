@@ -15,8 +15,7 @@ $(document).ready(function() {
 	simulateNthChild("table.simulateNthChild", "tr", "n", 3);
 
 	// JSMediaQueries
-	var JSMediaQueries = require('./utils/JSMediaQueries');
-	var jsMediaQueries = new JSMediaQueries();
+	var jsMediaQueries = require('./utils/JSMediaQueries');
 	jsMediaQueries.init(["TN","SM", "MD", "BG"]); // must be defined in the css file like this on the #JSMediaQueries element
 
 	// Responsive DOM child element move into their parent container depending of the browser size, depends on JSMediaQueries events

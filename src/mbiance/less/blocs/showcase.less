@@ -5,8 +5,11 @@
 	background-color: #999;
 
 	> .container{
-		.fullContainer-all;
+		//.fullContainer-all;
+		.fullContainer-MD;
+		.fullContainer-BG;
 		position: relative;
+		overflow: hidden;
 		
 		> .slide{
 
@@ -24,18 +27,24 @@
 			}
 			
 			> .contentContainer{
+				box-sizing: border-box;
 				position: relative;
 				z-index: 2;
 				display: table;
-	
+
+					
 				@media @screenTN { 
 					width: 100%;
 					height: 220px;
+					padding-left: 20px;
+					padding-right: 20px;
 				}
 
 				@media @screenSM { 
 					width: 100%;
 					height: 220px;
+					padding-left: 20px;
+					padding-right: 20px;
 				}
 
 				@media @screenMD { 
