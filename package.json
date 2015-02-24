@@ -1,7 +1,7 @@
 {
   "name": "FrontEndBoilerplate",
   "version": "0.0.0",
-  "description": "Test for Gulp",
+  "description": "FrontEndBoilerplate",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,10 +9,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "beeper": "^1.0.0",
     "browserify": "*",
     "colors": "*",
     "del": "*",
-    "gsap": "^1.15.1",
     "gulp": "*",
     "gulp-concat": "*",
     "gulp-htmlmin": "^1.1.0",
@@ -27,8 +27,7 @@
     "imagemin-pngquant": "^4.0.0",
     "jshint-stylish": "*",
     "less-plugin-autoprefix": "*",
-    "vinyl-buffer": "*",
-    "vinyl-source-stream": "*"
+    "vinyl-transform": "^1.0.0"
   },
   "dependencies": {
     "gsap": "^1.15.1",

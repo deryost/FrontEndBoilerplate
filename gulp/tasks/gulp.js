@@ -3,9 +3,9 @@ var cfg = require('../config.js');
 var gulp = require('gulp');
 var colors = require('colors'); // get colors in your node.js console like what
 var browserify = require('browserify');
+var del = require('del');
 var less = require('gulp-less');
 var livereload = require('gulp-livereload');
-var del = require('del');
 var rename = require("gulp-rename");
 var jshint = require('gulp-jshint');
 var uglify = require('gulp-uglify');
@@ -14,10 +14,10 @@ var plumber = require('gulp-plumber');
 var imagemin = require('gulp-imagemin');
 var htmlmin = require('gulp-htmlmin');
 var pngquant = require('imagemin-pngquant');
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
+var transform = require('vinyl-transform');
 var sourcemaps = require('gulp-sourcemaps');
 var LessPluginAutoPrefix = require('less-plugin-autoprefix'), autoprefixPlugin = new LessPluginAutoPrefix({browsers: cfg.autoprefixerBrowsers});
+var beeper = require('beeper');
 var os = require("os");
 
 // Log
@@ -92,22 +92,24 @@ gulp.task('jshint', function() {
 // Javascript --------------------------------------------------------------------
 // https://github.com/gulpjs/gulp/blob/master/docs/recipes/browserify-uglify-sourcemap.md	
 // http://viget.com/extend/gulp-browserify-starter-faq
-gulp.task('js', function() {
-	return browserify(cfg.src.jsMainFile.path)
-		.bundle()
-		.pipe(source(cfg.dist.jsMainFile.name))
-		.pipe(buffer())
-		.pipe(sourcemaps.init({loadMaps: true}))
-		.pipe(uglify()) // Add transformation tasks to the pipeline here.
+gulp.task('js', function () {
+	var browserified = transform(function(filename) {
+		return browserify(filename).bundle();
+	});
+	return gulp.src([cfg.src.jsMainFile.path]) 
+		.pipe(plumber({errorHandler: plumberErrCatch}))
+		.pipe(sourcemaps.init())
+		.pipe(browserified)
+		.pipe(uglify())
 		.pipe(sourcemaps.write('./'))
 		.pipe(gulp.dest(cfg.dist.jsDir));
 });
+
 
 // JsLibs --------------------------------------------------------------------
 gulp.task('jsLibs', function() {
 	// cfg.src.jsVendorsFiles
 	gulp.src(cfg.src.jsVendorsFiles)
-		.pipe(plumber({errorHandler: plumberErrCatch}))
 		.pipe(plumber({errorHandler: plumberErrCatch}))
 		.pipe(sourcemaps.init({loadMaps: true}))
 		.pipe(uglify())
@@ -166,6 +168,8 @@ gulp.task('watch', function () {
 
 // Plumber catch function --------------------------------------------------------------------
 function plumberErrCatch(err) {
-	console.log("[" +err.plugin.toString().red + "] " + err.message.toString().bgRed);
+	var plugin = (err.plugin) ? "[" +err.plugin.toString().red + "] " : '';
+	console.log(plugin + err.message.toString().bgRed);
+	beeper('*-*-*');
 	this.emit('end');
 }
