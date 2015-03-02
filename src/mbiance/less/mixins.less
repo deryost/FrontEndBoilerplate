@@ -12,7 +12,7 @@
 	//overflow: hidden;
 	margin: 0 auto;
 	.clearfix();
-	.transition(width .3s ease-out);
+	//.transition(width .3s ease-out);
 }
 
 // fullContainer-TN
@@ -51,6 +51,36 @@
 		//background-color: rgba(255, 0, 0, 0.2);
 		width: @screen-width-BG;
 	}
+}
+
+// Columns creation
+.cols(@n, @position:left) {
+	box-sizing: border-box;
+	width: (@n * (@cols-width + @cols-gutter*2));
+	padding: @cols-gutter;
+	float: @position;
+}
+
+// Columns creation, but centered
+.cols (@n, @position) when (@position = center) {
+	margin-left: auto;
+	margin-right: auto;
+	.cols(@n, none);
+}
+
+// Columns creation, in percent
+.cols-percent(@percent, @position:left) {
+	box-sizing: border-box;
+	width: @percent;
+	padding: @cols-gutter;
+	float: @position;
+}
+
+// Columns creation, but centered in percent
+.cols-percent (@percent, @position) when (@position = center) {
+	margin-left: auto;
+	margin-right: auto;
+	.cols-percent(@percent, none);
 }
 
 // font

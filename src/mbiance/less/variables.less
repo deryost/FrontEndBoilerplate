@@ -1,29 +1,26 @@
-/*
-Adjectives :
-positive, catchy, crucial, significant, heavy, high, highlight, important, eyeCatching, colorful, priority
-negative, error, warning, alert, danger
-neutral, lightweight, sober, modest, medium, less, colorless, light, low, subtle
-*/
-
 // Cols
-@cols-width: 270px;
-@cols-gutter: 40px;
+@cols-width: 67px;
+@cols-gutter: 15px;
+@cols-count-TN: 3;
+@cols-count-SM: 6;
+@cols-count-MD: 9;
+@cols-count-BG: 12;
 
 // Screen sizes : width (be careful to make no overlapping design)
 @screen-width-TN-min: 0px;
-@screen-width-TN: 270px;
+@screen-width-TN: ((@cols-width+2*@cols-gutter)*@cols-count-TN);
 @screen-width-TN-max: 619px;
 
-@screen-width-SM-min: 620px;
-@screen-width-SM: 620px;
-@screen-width-SM-max: 929px;
+@screen-width-SM-min: ((@cols-width+2*@cols-gutter)*@cols-count-SM);
+@screen-width-SM: @screen-width-SM-min;
+@screen-width-SM-max: (@screen-width-MD - 1px);
 
-@screen-width-MD-min: 930px; 
-@screen-width-MD: 930px;
-@screen-width-MD-max: 1239px;
+@screen-width-MD-min: ((@cols-width+2*@cols-gutter)*@cols-count-MD);
+@screen-width-MD: @screen-width-MD-min;
+@screen-width-MD-max: (@screen-width-BG - 1px);
 
-@screen-width-BG-min: 1150px;
-@screen-width-BG: 1150px;
+@screen-width-BG-min: ((@cols-width+2*@cols-gutter)*@cols-count-BG);
+@screen-width-BG: @screen-width-BG-min;
 @screen-width-BG-max: 999999px; // 100% doesn't work here
 
 // Screen : breakpoints (breakpoint could be different than screen sizes, be careful to make no overlapping design)
@@ -36,7 +33,7 @@ neutral, lightweight, sober, modest, medium, less, colorless, light, low, subtle
 @screen-breakpoint-MD-min: 970px;
 @screen-breakpoint-MD-max: 1199px;
 
-@screen-breakpoint-BG-min: 1200px;
+@screen-breakpoint-BG-min: (@screen-width-BG-min+30px);
 @screen-breakpoint-BG-max: 999999px;
 
 // Screen size : media queries

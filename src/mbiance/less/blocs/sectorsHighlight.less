@@ -11,6 +11,7 @@
 		> .strikeTitle{
 			.strikeTitle(@color: #000);
 			padding: 50px 0 30px;
+			.cols-percent (100%, center);
 		}
 
 		> .summary{
@@ -18,60 +19,26 @@
 			color: #888888;
 			
 			text-align: center;
-			margin: 0 auto;
 			padding-bottom: 20px;
-			@media @screenTN, @screenSM, @screenMD { 
-				width: 100%;
-			}
-			@media @screenBG { 
-				width: 80%;
-			}
+			
+			.cols-percent (100%, center);
 		}
 
 		> .sectorsList{
 			overflow: hidden;
+
 			> .sector{
 				
-				box-sizing: border-box;
 				.clearfix;
+				
 				@media @screenTN { 
-					width: 100%;
-					max-width: 400px;
-					margin-bottom: 2%;
-					margin-left: auto;
-					margin-right: auto;
+					.cols(3, center);
 				}
-
-				@media @screenSM { 
-					width: ((100% - (2%*1) ) / 2);
-					margin-right: 2%;
-					margin-bottom: 2%;
-					float: left;
-					&.n2_2{margin-right: 0%;} // js class patch for IE8
-					&:nth-child(2n+0){margin-right: 0%;}
+				@media @screenSM, @screenMD, @screenBG { 
+					.cols(3);
 				}
-
-				@media @screenMD { 
-					width: ((100% - (2%*2) ) / 3);
-					margin-right: 2%;
-					margin-bottom: 2%;
-					float: left;
-					&.n3_3{margin-right: 0%;} // js class patch for IE8
-					&:nth-child(3n+0){margin-right: 0%;}
-					//background-color: rgba(255, 0, 255, .2);
-				}
-
-				@media @screenBG { 
-					width: ((100% - (2%*3) ) / 4);
-					margin-right: 2%;
-					margin-bottom: 2%;
-					float: left;
-					&.n4_4{margin-right: 0%;} // js class patch for IE8
-					&:nth-child(4n+0){margin-right: 0%;}
-					//background-color: rgba(0, 0, 255, .2);
-				}
-
-
+				//background: rgba(255,0,255,.3);
+				
 				> .icon{
 					float: left;
 					margin-right: 10px;

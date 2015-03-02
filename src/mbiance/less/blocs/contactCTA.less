@@ -4,41 +4,47 @@
 	.clearfix();
 	background-color: @color-blue;
 	color: #fff;
-	> .container{
-		padding: 40px 0;
+	> .fullContainer{
 		.fullContainer-all;
-		position: relative;
-
-		> .title{
-			text-transform: uppercase;
-			margin: 0;
-			.font(25px, 30px);
-		}
-
-		> .desc{
-			font-family: @font-important-light;
-			.font(20px, 25px, normal, italic);
-			margin: 0;
+		> .container{
+			.cols-percent (100%, center);
+			.clearfix();
+			padding-top: 40px;
+			padding-bottom: 40px;
 			
-			@media @screenSM, @screenMD, @screenBG{
-				max-width: 70%;
-			}
-		}
-
-		> .button{
+			position: relative;
 			
-			@media @screenTN{
-				margin-top: 20px;
-				float: right;
+			> .title{
+				text-transform: uppercase;
+				margin: 0;
+				.font(25px, 30px);
 			}
 
-			@media @screenSM, @screenMD, @screenBG{
-				position: absolute;
-				top: 50px;
-				right: 0;
+			> .desc{
+				font-family: @font-important-light;
+				.font(20px, 25px, normal, italic);
+				margin: 0;
+				
+				@media @screenSM, @screenMD, @screenBG{
+					max-width: 70%;
+				}
 			}
 
-			.buttonTrans();
+			> .button{
+				
+				@media @screenTN{
+					margin-top: 20px;
+					float: right;
+				}
+
+				@media @screenSM, @screenMD, @screenBG{
+					position: absolute;
+					top: 50px;
+					right: 0;
+				}
+
+				.buttonTrans();
+			}
 		}
 	}
 }

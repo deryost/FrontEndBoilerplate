@@ -5,11 +5,7 @@
 		background: @color-blue url('@{path-img}/bgRightGrey.png') repeat-y center;
 	} 
 	> .container{
-		@media @screenTN { 
-			width: 100%;
-		}
-
-		@media @screenSM { 
+		@media @screenTN, @screenSM { 
 			width: 100%;
 		}
 		.fullContainer-MD;
@@ -17,19 +13,34 @@
 	}
 
 	#expertise, #solutions {
-		box-sizing: border-box;
-		.clearfix();
+		
+		@media @screenTN { 
+			.cols-percent(100%);
+		}
+		@media @screenSM, @screenMD, @screenBG{ 
+			.cols-percent(50%);
+		}
+
+		&#expertise {
+			background-color: @color-blue;
+		}
+		
+		&#solutions {
+			background-color: @color-grey;
+			> .container{
+				@media @screenSM, @screenMD, @screenBG{ 
+					padding-left: 25px;
+				}
+			}
+		}
 
 		& > .container {
 			box-sizing: border-box;
 			color: #fff;
-			
-			@media @screenSM{ 
-				width: @screen-width-SM;
-				margin: 0 auto;
-				padding: 20px 0;
-			}
 
+			padding-top: 25px;
+			padding-bottom: 25px;
+			
 			& > .title{
 				margin-top: 0;
 				.twoLinesTitle(#fff);
@@ -39,39 +50,5 @@
 				.font(16px, 22px);
 			}
 		}
-	}
-}
-
-// expertise ------------------------------------
-#expertise{
-	background-color: @color-blue;
-
-	@media @screenTN, @screenSM{ 
-		width: 100%;
-		padding: 20px;
-	}
-
-	@media @screenMD, @screenBG { 
-		float: left;
-		width: 50%;
-		padding: 40px 40px 40px 0;
-	}
-}
-
-// solutions ------------------------------------
-#solutions{
-	background-color: @color-grey;
-	
-	
-
-	@media @screenTN, @screenSM{ 
-		width: 100%;	
-		padding: 20px;
-	}
-
-	@media @screenMD, @screenBG { 
-		float: left;
-		width: 50%;
-		padding: 40px;
 	}
 }

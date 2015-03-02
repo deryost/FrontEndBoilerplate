@@ -5,9 +5,6 @@
 	background-color: #999;
 
 	> .container{
-		//.fullContainer-all;
-		//.fullContainer-MD;
-		//.fullContainer-BG;
 		position: relative;
 		overflow: hidden;
 		
@@ -47,27 +44,12 @@
 					
 					display: table;
 						
-					@media @screenTN { 
-						width: 100%;
+					@media @screenTN, @screenSM { 
+						.cols-percent(100%);
 						height: 220px;
-						padding-left: 20px;
-						padding-right: 20px;
 					}
-
-					@media @screenSM { 
-						width: 100%;
-						height: 220px;
-						padding-left: 20px;
-						padding-right: 20px;
-					}
-
-					@media @screenMD { 
-						width: 35%;
-						height: 520px;
-					}
-
-					@media @screenBG { 
-						width: 35%;
+					@media @screenMD, @screenBG { 
+						.cols-percent(35%);
 						height: 520px;
 					}
 

@@ -1,105 +1,108 @@
 // footer
 #footer{
-	position: relative;
-	box-sizing: border-box;
+	//position: relative;
+	//box-sizing: border-box;
 	.clearfix();
 	
-	background-color: #000;
-
-	
+	@media @screenSM{
+		background-color: #000;
+	}
 	@media @screenSM, @screenMD, @screenBG{
 		background: #000 url('@{path-img}/footerBG.jpg') no-repeat top center;
 		height: 312px;
 	}
-
 	color: #fff;
-	> .container{
+
+	> .fullContainer{
 		.fullContainer-SM;
 		.fullContainer-MD;
 		.fullContainer-BG;
 
-		> .col1{
-			
-			box-sizing: border-box;
-			.clearfix();
-			
-			
-			@media @screenTN{
-				background-color: #444;
-				padding: 20px;
-			}
-			@media @screenSM, @screenMD, @screenBG{
-				background-color: rgba(0,0,0,.2);
-				width: 50%;
-				float: left;
-				height: 309px;
-				padding: 40px;
-			}
-			> .testimony{
-				
-				font-family: @font-important-light;
 
-				p:first-of-type{margin-top: 0;}
-				p:last-of-type{margin-bottom: 0;}
+		> .container{
+			> .col1{
+				box-sizing: border-box;
+				.clearfix();
 				
 				@media @screenTN{
-					.font(14px, 18px);
+					.cols-percent(100%);
+					background-color: #444;
 				}
-				@media @screenSM{
-					.font(14px, 18px);
+				@media @screenSM, @screenMD, @screenBG{
+					.cols-percent(50%);
+					background-color: rgba(0,0,0,.2);
+					float: left;
+					height: 309px;
+					padding-top: 40px;
+					padding-bottom: 40px;
 				}
-				@media @screenMD{
-					.font(16px, 20px);
-				}
-				@media @screenBG{
-					.font(18px, 24px);
-				}
-			}
-		}
-
-		> .col2{
-			box-sizing: border-box;
-			.clearfix();
-			@media @screenTN{
-				padding: 20px;
-				background-color: #222;
-			}
-			@media @screenSM, @screenMD, @screenBG{
-				width: 50%;
-				float: left;
-				height: 309px;
-				padding: 40px;
-			}
-			> .contactInfos {
-				h3{
-					text-transform: uppercase; 
-					margin: 20px 0 5px 0; 
-					.font(16px, 24px);
-				}
-				h3:first-of-type{margin-top: 0;}
-				> .data{
+				> .testimony{
 					
-					@media @screenTN, @screenSM{
-						.font(13px, 18px); 
+					font-family: @font-important-light;
+
+					p:first-of-type{margin-top: 0;}
+					p:last-of-type{margin-bottom: 0;}
+					
+					@media @screenTN{
+						.font(14px, 18px);
 					}
-					@media @screenMD, @screenBG{
-						.font(14px, 20px); 
+					@media @screenSM{
+						.font(14px, 18px);
 					}
-					color: #999;
+					@media @screenMD{
+						.font(16px, 20px);
+					}
+					@media @screenBG{
+						.font(18px, 24px);
+					}
 				}
-				> .social{
-					margin-top: 20px;
-					> .facebook, > .twitter{
-						display: inline-block;
-						position: relative;
-						margin-right: 5px;
-						left: -10px;
-						.size(32px);
-						&:hover{
-							opacity: .8;
+			}
+
+			> .col2{
+
+				box-sizing: border-box;
+				.clearfix();
+				@media @screenTN{
+					.cols-percent(100%);
+					background-color: #222;
+				}
+				@media @screenSM, @screenMD, @screenBG{
+					.cols-percent(50%);
+					padding-top: 40px;
+					padding-bottom: 40px;
+					height: 309px;
+				}
+				> .contactInfos {
+					h3{
+						text-transform: uppercase; 
+						margin: 20px 0 5px 0; 
+						.font(16px, 24px);
+					}
+					h3:first-of-type{margin-top: 0;}
+					> .data{
+						
+						@media @screenTN, @screenSM{
+							.font(13px, 18px); 
 						}
-						&.facebook{background: url('@{path-img}/footer-logo-facebook.png') no-repeat center;}
-						&.twitter{background: url('@{path-img}/footer-logo-twitter.png') no-repeat center; top: 1px;}
+						@media @screenMD, @screenBG{
+							.font(14px, 20px); 
+						}
+						color: #999;
+					}
+					> .social{
+						margin-top: 20px;
+						> .facebook, > .twitter{
+							display: inline-block;
+							position: relative;
+							margin-right: 5px;
+							left: -10px;
+							.size(32px);
+							&:hover{
+								opacity: .8;
+							}
+							&.facebook{background: url('@{path-img}/footer-logo-facebook.png') no-repeat center;}
+							&.twitter{background: url('@{path-img}/footer-logo-twitter.png') no-repeat center; top: 1px;}
+						}
 					}
 				}
 			}
@@ -108,14 +111,16 @@
 }
 
 #copyrights{
-	position: relative;
-	box-sizing: border-box;
 	.clearfix();
 	background-color: #000;
-	> .container{
-		.fullContainer-all;
-		.font(12px, 12px);
-		color: #fff;
-		padding: 20px 40px;
+	> .fullContainer{
+		.fullContainer-SM;
+		.fullContainer-MD;
+		.fullContainer-BG;
+		> .container{
+			.cols-percent(100%, center);
+			.font(12px, 12px);
+			color: #fff;
+		}
 	}
 }

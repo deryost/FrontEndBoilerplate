@@ -11,13 +11,13 @@ $(document).ready(function() {
 	avoidConsoleErrors();
 
 	// Simulate N child selector (FIX for IE8)
-	var simulateNthChild = require('./utils/simulateNthChild');
+	/*var simulateNthChild = require('./utils/simulateNthChild');
 	simulateNthChild(".sectorsList", ".sector", "n4_", 4);
 	simulateNthChild(".sectorsList", ".sector", "n3_", 3);
 	simulateNthChild(".sectorsList", ".sector", "n2_", 2);
 	simulateNthChild(".portfolioHighlight", ".portfolioItem", "n4_", 4);
 	simulateNthChild(".portfolioHighlight", ".portfolioItem", "n3_", 3);
-	simulateNthChild(".portfolioHighlight", ".portfolioItem", "n2_", 2);
+	simulateNthChild(".portfolioHighlight", ".portfolioItem", "n2_", 2);*/
 
 	// JSMediaQueries
 	var jsMediaQueries = require('./utils/JSMediaQueries');
@@ -31,7 +31,7 @@ $(document).ready(function() {
     // jQuery MatchHeight plugin
     $("#expertise, #solutions").matchHeight();
 	$(".sectorsList .sector").matchHeight();
-	$(".portfolioHighlight .portfolioItem").matchHeight();
+	$("#portfolioHighlight .portfolioItem").matchHeight({ property: 'min-height' });
 
 
     // Showcase

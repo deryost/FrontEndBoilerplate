@@ -16,53 +16,48 @@
 		> .portfolioItems{
 			.clearfix();
 			margin: 0 auto;
-
-			@media @screenTN { 
-				width: ((270px * 1) + (23px*0));
-			}
-
-			@media @screenSM { 
-				width: ((270px * 2) + (23px*1));
-			}
-
-			@media @screenMD { 
-				width: ((270px * 3) + (23px*2));
-			}
 			
 			> .portfolioItem{
 				box-sizing: border-box;
 				.clearfix;
-
-				width: 270px;
-				margin-right: 23px;
-				margin-bottom: 23px;
-				float: left;
-	
+				
 				@media @screenTN { 
-
+					.cols(3, center);
 				}
-
-				@media @screenSM { 
-					&.n2_2{margin-right: 0;} // js class patch for IE8
-					&:nth-child(2n+0){margin-right: 0;}
+				@media @screenSM{ 
+					.cols-percent(50%);
 				}
-
-				@media @screenMD { 
-					&.n3_3{margin-right: 0;} // js class patch for IE8
-					&:nth-child(3n+0){margin-right: 0;}
-					//background-color: rgba(255, 0, 255, .2);
+				@media @screenMD{ 
+					.cols-percent(33.3333%);
+				}
+				@media @screenBG { 
+					.cols-percent(33.3333%);
+				}
+				@media @screenMD, @screenBG { 
 					&:nth-child(n+4) {
 						display: none;
 					}
 				}
-
+				/*@media @screenTN { 
+					.cols(3, none);
+					margin: 0 auto;
+				}
+				@media @screenSM{ 
+					.cols(3);
+				}
+				@media @screenMD{ 
+					.cols(3);
+				}
 				@media @screenBG { 
-					&.n4_4{margin-right: 0;} // js class patch for IE8
-					&:nth-child(4n+0){margin-right: 0;}
-					//background-color: rgba(0, 0, 255, .2);
+					.cols(4);
 				}
 
-				//cursor: pointer;
+				@media @screenMD, @screenBG { 
+					&:nth-child(n+4) {
+						display: none;
+					}
+				}*/
+
 				.transition(all .3s ease-out);
 				&:hover
 				{
