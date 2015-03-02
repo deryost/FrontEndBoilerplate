@@ -101,6 +101,7 @@ gulp.task('js', function () {
 		.pipe(sourcemaps.init())
 		.pipe(browserified)
 		.pipe(uglify())
+		.pipe(rename({extname: cfg.dist.jsExtname})) // change extension
 		.pipe(sourcemaps.write('./'))
 		.pipe(gulp.dest(cfg.dist.jsDir));
 });

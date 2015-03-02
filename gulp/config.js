@@ -24,6 +24,7 @@ cfg.dist.fontsDir = cfg.dist.dir + "fonts/";
 cfg.dist.imgDir = cfg.dist.dir + "img/";
 cfg.dist.cssDir = cfg.dist.dir + "css/";
 cfg.dist.cssExtname = ".min.css";
+cfg.dist.jsExtname = ".min.js";
 cfg.dist.jsMainFile = {};
 cfg.dist.jsMainFile.name = "main.min.js";
 cfg.dist.jsMainFile.path = cfg.dist.jsDir + cfg.dist.jsMainFile.name;
