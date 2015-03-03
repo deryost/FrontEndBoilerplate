@@ -1,5 +1,5 @@
 'use strict';
-var cfg = require('../config.js');
+var cfg = require('./gulp-config.js');
 var gulp = require('gulp');
 var colors = require('colors'); // get colors in your node.js console like what
 var browserify = require('browserify');
@@ -24,7 +24,7 @@ var os = require("os");
 console.log("hostname: [" + os.hostname().grey.underline + "]" + " (" + "ajouté éventuellements des configs par utilisateur".bold.grey + ")");
 
 // Run --------------------------------------------------------------------
-gulp.task("run", ['html', 'img', 'copyfonts', 'css', 'js', 'jsLibs', 'watch'], function(){});
+gulp.task("run", ['html', 'img', 'copyfonts', 'css', 'js', 'js:libs', 'watch'], function(){});
 
 // clean --------------------------------------------------------------------
 gulp.task('clean', function () {
@@ -77,7 +77,7 @@ gulp.task('html', function() {
 });
 
 // JS validation --------------------------------------------------------------------
-gulp.task('jshint', function() {
+gulp.task('js:hint', function() {
 	gulp.src(cfg.jshintPaths)
 		.pipe(plumber({errorHandler: plumberErrCatch}))
 		.pipe(jshint({strict: true}))
@@ -107,8 +107,8 @@ gulp.task('js', function () {
 });
 
 
-// JsLibs --------------------------------------------------------------------
-gulp.task('jsLibs', function() {
+// js:libs --------------------------------------------------------------------
+gulp.task('js:libs', function() {
 	// cfg.src.jsVendorsFiles
 	gulp.src(cfg.src.jsVendorsFiles)
 		.pipe(plumber({errorHandler: plumberErrCatch}))
@@ -136,7 +136,7 @@ gulp.task('watch', function () {
 	});
 
 	// Watch JS vendors
-	var watcherJS = gulp.watch(cfg.src.jsDir + '/**/vendor/*.js', ['jsLibs']);
+	var watcherJS = gulp.watch(cfg.src.jsDir + '/**/vendor/*.js', ['js:libs']);
 	watcherJS.on('change', function(event) {
 		console.log('Js [vendors] File '+ event.path.green +' was '+ event.type.bgGreen.bold);
 	});
