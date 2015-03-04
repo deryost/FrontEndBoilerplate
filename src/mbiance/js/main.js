@@ -35,7 +35,7 @@ $(document).ready(function() {
 
 
     // Showcase
-    var Showcase = require('./blocs/showcase');
+    var Showcase = require('./blocks/showcase');
     var scContainer = $('#showcase');
     var showcase = new Showcase(scContainer, scContainer.find('.slide'), scContainer.find('.nav a'));
 
