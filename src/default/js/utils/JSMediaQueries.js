@@ -1,12 +1,10 @@
 "use strict";
 
-$ = require('jquery');
-
 // JSMediaQueries class
 function JSMediaQueries() {
-	this.cssMediaQuery;
-	this.cssBreakPointsNames;
-	this.currentBreakPointName;
+	this.cssMediaQuery = null;
+	this.cssBreakPointsNames = null;
+	this.currentBreakPointName = null;
 }
 
 // Init the module

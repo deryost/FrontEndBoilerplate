@@ -1,15 +1,14 @@
 "use strict";
-$ = require('jquery');
 
 module.exports = function(containerSelector, elementSelector, prefix, nMax) {
 
 	var containers = $(containerSelector);
 
-	containers.each(function(index) {
+	containers.each(function() {
 		var container = $(this);
 		var elements = container.find(elementSelector);
 		var counter = 0;
-		elements.each(function(index) {
+		elements.each(function() {
 			var element = $(this);
 			element.addClass(prefix + (counter+1));
 			counter++;

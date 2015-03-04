@@ -1,7 +1,7 @@
 var cfg = {};
 
 cfg.src = {};
-cfg.src.dir = "./src/mbiance/";
+cfg.src.dir = "./src/default/";
 cfg.src.htmlDir = cfg.src.dir; // same as base
 cfg.src.jsDir = cfg.src.dir + "js/";
 cfg.src.fontsDir = cfg.src.dir + "fonts/";
@@ -36,7 +36,24 @@ cfg.dist.jsVendorsFile.path = cfg.dist.jsDir + cfg.dist.jsVendorsFile.name;
 // Check the compile files only
 cfg.livereloadPaths = ['./**/*.html', cfg.dist.jsDir + '**/*', cfg.dist.cssDir + '**/*', cfg.dist.imgDir + '**/*'];
 
-cfg.jshintPaths = ['!' + cfg.src.jsDir + 'vendor/*.js', cfg.src.jsDir + '**/*.js'],
+// JS HINT
+// https://github.com/jshint/jshint/blob/master/examples/.jshintrc
+cfg.jsHintOptions = {
+	"devel" : true, // Development/debugging (alert, confirm, etc)
+	"browserify" : true, // Browserify (node.js code in the browser)
+	"camelcase" : true, // true: Identifiers must be in camelCase
+	"maxerr" : 50, // {int} Maximum error before stopping
+	"indent" : 4,  // {int} Number of spaces to use for indentation
+	"newcap" : false, // true: Require capitalization of all constructor functions e.g. `new F()`
+	"freeze" : true, // true: prohibits overwriting prototypes of native objects such as Array, Date etc.
+	"latedef" : false, // true: Require variables/functions to be defined before being used
+	"unused" : true, // true: Require all defined variables be used
+	"predef" : ["$"], // additional predefined global variables
+	"strict" : true, // true: Requires all functions run in ES5 Strict Mode
+	"immed" : true, // true: Require immediate invocations to be wrapped in parens e.g. `(function () { } ());`
+	"maxlen" : false // {int} Max number of characters per line
+};
+cfg.jshintPaths = ["./gulp/**/*.js", cfg.src.jsDir + '**/*.js', '!' + cfg.src.jsDir + 'vendor/**/*.js']; //['!' + cfg.src.jsDir + 'vendor/*.js', cfg.src.jsDir + '**/*.js'];
 
 cfg.autoprefixerBrowsers = [
 	'ie >= 8',

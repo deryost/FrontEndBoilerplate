@@ -1,4 +1,6 @@
-global.jQuery = $ = require('jquery');
+"use strict";
+
+global.jQuery = global.$ = require('jquery');
 //require('./vendor/respond.min.js'); // A fast & lightweight polyfill for min/max-width CSS3 Media Queries (for IE 6-8, and more)
 require('./vendor/jquery.matchHeight-min.js');
 //require('./vendor/modernizr-2.8.3.min.js');
@@ -37,7 +39,7 @@ $(document).ready(function() {
     // Showcase
     var Showcase = require('./blocks/showcase');
     var scContainer = $('#showcase');
-    var showcase = new Showcase(scContainer, scContainer.find('.slide'), scContainer.find('.nav a'));
+    new Showcase(scContainer, scContainer.find('.slide'), scContainer.find('.nav a'));
 
 });
 

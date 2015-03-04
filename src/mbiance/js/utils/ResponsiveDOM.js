@@ -4,8 +4,6 @@
 
 "use strict";
 
-$ = require('jquery');
-
 // Constructor
 function ResponsiveDOM() {
 	
@@ -22,14 +20,14 @@ ResponsiveDOM.prototype.init = function() {
 // Move responsive child into parents
 ResponsiveDOM.prototype.stateChange = function(state) {
 	var childs = $("[data-responsivechild]");
-	childs.each(function(index) {
+	childs.each(function() {
 		var child = $(this);
 		var childID = child.data("responsivechild");
 		var parents = $('[data-responsiveparent="' + childID + '"]');
-		parents.each(function(index) {
+		parents.each(function() {
 			var parent = $(this);
-			var parentID = parent.data("responsiveparent");
 			var parentState = parent.data("state");
+			//var parentID = parent.data("responsiveparent");
 			//console.log("parentID:" + parentID + " childID:" + childID + " parentState:" + parentState + " ?= " + state);
 			if(parentState == state){
 				parent.append(child);

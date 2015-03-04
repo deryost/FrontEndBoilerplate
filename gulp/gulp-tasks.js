@@ -1,7 +1,7 @@
 'use strict';
+require('colors'); // get colors in your node.js console like what
 var cfg = require('./gulp-config.js');
 var gulp = require('gulp');
-var colors = require('colors'); // get colors in your node.js console like what
 var browserify = require('browserify');
 var del = require('del');
 var less = require('gulp-less');
@@ -73,26 +73,26 @@ gulp.task('html', function() {
   gulp.src(cfg.src.htmlDir + '/**/*.html')
   	.pipe(plumber({errorHandler: plumberErrCatch}))
     .pipe(htmlmin({collapseWhitespace: true, removeComments:true}))
-    .pipe(gulp.dest(cfg.dist.htmlDir))
+    .pipe(gulp.dest(cfg.dist.htmlDir));
 });
 
 // JS validation --------------------------------------------------------------------
 gulp.task('js:hint', function() {
 	gulp.src(cfg.jshintPaths)
 		.pipe(plumber({errorHandler: plumberErrCatch}))
-		.pipe(jshint({strict: true}))
+		.pipe(jshint(cfg.jsHintOptions))
 		//.pipe(jshint.reporter('default'))
 		.pipe(jshint.reporter('jshint-stylish')) 
 		.pipe(jshint.reporter('fail'))
 		.on('error', function(){
 			console.log(" jshint error !".red);
-		})
+		});
 });
 
 // Javascript --------------------------------------------------------------------
 // https://github.com/gulpjs/gulp/blob/master/docs/recipes/browserify-uglify-sourcemap.md	
 // http://viget.com/extend/gulp-browserify-starter-faq
-gulp.task('js', function () {
+gulp.task('js', ['js:hint'], function () {
 	var browserified = transform(function(filename) {
 		return browserify(filename).bundle();
 	});
@@ -116,7 +116,7 @@ gulp.task('js:libs', function() {
 		.pipe(uglify())
 		.pipe(concat(cfg.dist.jsVendorsFile.name))
 		.pipe(sourcemaps.write('./')) // write the source map file at the same place
-		.pipe(gulp.dest(cfg.dist.jsVendorsFile.dir))
+		.pipe(gulp.dest(cfg.dist.jsVendorsFile.dir));
 });
 
 
@@ -136,8 +136,8 @@ gulp.task('watch', function () {
 	});
 
 	// Watch JS vendors
-	var watcherJS = gulp.watch(cfg.src.jsDir + '/**/vendor/*.js', ['js:libs']);
-	watcherJS.on('change', function(event) {
+	var watcherJSVendors = gulp.watch(cfg.src.jsDir + '/**/vendor/*.js', ['js:libs']);
+	watcherJSVendors.on('change', function(event) {
 		console.log('Js [vendors] File '+ event.path.green +' was '+ event.type.bgGreen.bold);
 	});
 
@@ -169,6 +169,7 @@ gulp.task('watch', function () {
 
 // Plumber catch function --------------------------------------------------------------------
 function plumberErrCatch(err) {
+	/*jshint validthis:true */
 	var plugin = (err.plugin) ? "[" +err.plugin.toString().red + "] " : '';
 	console.log(plugin + err.message.toString().bgRed);
 	beeper('*-*-*');
