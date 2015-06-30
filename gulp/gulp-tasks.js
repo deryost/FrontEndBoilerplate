@@ -14,14 +14,16 @@ var plumber = require('gulp-plumber');
 var imagemin = require('gulp-imagemin');
 var htmlmin = require('gulp-htmlmin');
 var pngquant = require('imagemin-pngquant');
-var transform = require('vinyl-transform');
+var source = require('vinyl-source-stream');
+var streamify = require('gulp-streamify');
+var buffer = require('vinyl-buffer');
 var sourcemaps = require('gulp-sourcemaps');
 var LessPluginAutoPrefix = require('less-plugin-autoprefix'), autoprefixPlugin = new LessPluginAutoPrefix({browsers: cfg.autoprefixerBrowsers});
 var beeper = require('beeper');
 var os = require("os");
 
 // Log
-console.log("hostname: [" + os.hostname().grey.underline + "]" + " (" + "ajouté éventuellements des configs par utilisateur".bold.grey + ")");
+console.log("hostname: [" + os.hostname().grey.underline + "]" );
 
 // Run --------------------------------------------------------------------
 gulp.task("run", ['html', 'img', 'copyfonts', 'css', 'js', 'js:libs', 'watch'], function(){});
@@ -34,7 +36,7 @@ gulp.task('clean', function () {
 // Images --------------------------------------------------------------------
 gulp.task('img', function () {
 	return gulp.src(cfg.src.imgDir + '/**/*.*')
-		.pipe(plumber({errorHandler: plumberErrCatch}))
+		.pipe(plumber({errorHandler: handleErrors}))
 		.pipe(imagemin({
 			progressive: true,
 			svgoPlugins: [{removeViewBox: false}],
@@ -46,7 +48,7 @@ gulp.task('img', function () {
 // Copy fonts --------------------------------------------------------------------
 gulp.task('copyfonts', function() {
 	gulp.src(cfg.src.fontsDir + '/**/*.{ttf,woff,eof,eot,svg}')
-	.pipe(plumber({errorHandler: plumberErrCatch}))
+	.pipe(plumber({errorHandler: handleErrors}))
 	.pipe(gulp.dest(cfg.dist.fontsDir));
 });
 
@@ -54,7 +56,7 @@ gulp.task('copyfonts', function() {
 gulp.task('css', function () {
 	//
 	gulp.src(cfg.src.lessMainFile.path)
-		.pipe(plumber({errorHandler: plumberErrCatch}))
+		.pipe(plumber({errorHandler: handleErrors}))
 		.pipe(sourcemaps.init({loadMaps: true, debug: true}))
 		.pipe(less({
 			compress: true,
@@ -71,7 +73,7 @@ gulp.task('css', function () {
 // html --------------------------------------------------------------------
 gulp.task('html', function() {
   gulp.src(cfg.src.htmlDir + '/**/*.html')
-  	.pipe(plumber({errorHandler: plumberErrCatch}))
+  	.pipe(plumber({errorHandler: handleErrors}))
     .pipe(htmlmin({collapseWhitespace: true, removeComments:true}))
     .pipe(gulp.dest(cfg.dist.htmlDir));
 });
@@ -79,7 +81,7 @@ gulp.task('html', function() {
 // JS validation --------------------------------------------------------------------
 gulp.task('js:hint', function() {
 	gulp.src(cfg.jshintPaths)
-		.pipe(plumber({errorHandler: plumberErrCatch}))
+		.pipe(plumber({errorHandler: handleErrors}))
 		.pipe(jshint(cfg.jsHintOptions))
 		//.pipe(jshint.reporter('default'))
 		.pipe(jshint.reporter('jshint-stylish')) 
@@ -90,28 +92,26 @@ gulp.task('js:hint', function() {
 });
 
 // Javascript --------------------------------------------------------------------
-// https://github.com/gulpjs/gulp/blob/master/docs/recipes/browserify-uglify-sourcemap.md	
-// http://viget.com/extend/gulp-browserify-starter-faq
+// https://github.com/gulpjs/gulp/blob/master/docs/recipes/	
 gulp.task('js', ['js:hint'], function () {
-	var browserified = transform(function(filename) {
-		return browserify(filename).bundle();
-	});
-	return gulp.src([cfg.src.jsMainFile.path]) 
-		.pipe(plumber({errorHandler: plumberErrCatch}))
+	browserify(cfg.src.jsMainFile.path)
+		.bundle()
+		//.pipe(plumber({errorHandler: handleErrors}))
+		.on('error', handleErrors)
+		.pipe(source(cfg.src.jsMainFile.name))
+		.pipe(buffer())
 		.pipe(sourcemaps.init())
-		.pipe(browserified)
-		.pipe(uglify())
+		.pipe(streamify(uglify()))
 		.pipe(rename({extname: cfg.dist.jsExtname})) // change extension
 		.pipe(sourcemaps.write('./'))
 		.pipe(gulp.dest(cfg.dist.jsDir));
 });
 
-
 // js:libs --------------------------------------------------------------------
 gulp.task('js:libs', function() {
 	// cfg.src.jsVendorsFiles
 	gulp.src(cfg.src.jsVendorsFiles)
-		.pipe(plumber({errorHandler: plumberErrCatch}))
+		.pipe(plumber({errorHandler: handleErrors}))
 		.pipe(sourcemaps.init({loadMaps: true}))
 		.pipe(uglify())
 		.pipe(concat(cfg.dist.jsVendorsFile.name))
@@ -167,11 +167,11 @@ gulp.task('watch', function () {
 });
 
 
-// Plumber catch function --------------------------------------------------------------------
-function plumberErrCatch(err) {
+// Plumber/Errors catch function --------------------------------------------------------------------
+function handleErrors(err) {
 	/*jshint validthis:true */
 	var plugin = (err.plugin) ? "[" +err.plugin.toString().red + "] " : '';
 	console.log(plugin + err.message.toString().bgRed);
-	beeper('*-*-*');
+	beeper('*-*');
 	this.emit('end');
 }
