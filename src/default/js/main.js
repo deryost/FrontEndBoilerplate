@@ -17,14 +17,13 @@ $(document).ready(function() {
 	var simulateNthChild = require('./utils/simulateNthChild');
 	simulateNthChild("table.simulateNthChild", "tr", "n", 3);
 
-	// JSMediaQueries
-	var jsMediaQueries = require('./utils/JSMediaQueries');
-	jsMediaQueries.init(["TN","SM", "MD", "BG"]); // must be defined in the css file like this on the #JSMediaQueries element
+	// Breakpoints
+	var breakpoints = require('../../core/js/Breakpoints');
+	breakpoints.init(["TN", "SM", "MD", "BG"]); // must be defined in the css file like this on the #breakpoints element
 
 	// Responsive DOM child element move into their parent container depending of the browser size, depends on JSMediaQueries events
-    var ResponsiveDOM = require('./utils/ResponsiveDOM');
-    var responsiveDOM = new ResponsiveDOM();
-    responsiveDOM.init();
+    var ResponsiveDOM = require('../../core/js/ResponsiveDOM');
+    new ResponsiveDOM();
 
      // jQuery MatchHeight plugin
     $("#matchHeight .match").matchHeight(); 

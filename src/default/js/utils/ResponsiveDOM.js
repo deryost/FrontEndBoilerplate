@@ -1,24 +1,19 @@
 // ResponsiveDOM class
 // Responsive DOM child elements move into their parent container depending of the browser size
-// Depends on JSMediaQueries events
+// Depends on Breakpoints events
 
 "use strict";
 
+var breakpoints = require('./Breakpoints');
+
 // Constructor
 function ResponsiveDOM() {
-	
+	breakpoints.on('change',$.proxy(this.stateChange,this));
+	this.stateChange();
 }
 
-// init
-ResponsiveDOM.prototype.init = function() {
-	var responsiveDOM = this;
-	$(document).on("JSMediaQueries.changeState", function(e, currentState){
-		responsiveDOM.stateChange(currentState);
-	});
-};
-
 // Move responsive child into parents
-ResponsiveDOM.prototype.stateChange = function(state) {
+ResponsiveDOM.prototype.stateChange = function() {
 	var childs = $("[data-responsivechild]");
 	childs.each(function() {
 		var child = $(this);
@@ -28,8 +23,8 @@ ResponsiveDOM.prototype.stateChange = function(state) {
 			var parent = $(this);
 			var parentState = parent.data("state");
 			//var parentID = parent.data("responsiveparent");
-			//console.log("parentID:" + parentID + " childID:" + childID + " parentState:" + parentState + " ?= " + state);
-			if(parentState == state){
+			//console.log("parentID:" + parentID + " childID:" + childID + " parentState:" + parentState + " ?= " + breakpoints.current());
+			if(parentState == breakpoints.current()){
 				parent.append(child);
 				return false;
 			}
