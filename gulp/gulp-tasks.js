@@ -5,6 +5,7 @@ var gulp = require('gulp');
 var browserify = require('browserify');
 var del = require('del');
 var less = require('gulp-less');
+var sass = require('gulp-sass');
 var livereload = require('gulp-livereload');
 var rename = require("gulp-rename");
 var jshint = require('gulp-jshint');
@@ -20,13 +21,15 @@ var buffer = require('vinyl-buffer');
 var sourcemaps = require('gulp-sourcemaps');
 var LessPluginAutoPrefix = require('less-plugin-autoprefix'), autoprefixPlugin = new LessPluginAutoPrefix({browsers: cfg.autoprefixerBrowsers});
 var beeper = require('beeper');
+//var aliasify = require('aliasify');
 var os = require("os");
+var notifier = require('node-notifier');
 
 // Log
 console.log("hostname: [" + os.hostname().grey.underline + "]" );
 
 // Run --------------------------------------------------------------------
-gulp.task("run", ['html', 'img', 'copyfonts', 'css', 'js', 'js:libs', 'watch'], function(){});
+gulp.task("default", cfg.defaultsTask, function(){});
 
 // clean --------------------------------------------------------------------
 gulp.task('clean', function () {
@@ -54,20 +57,33 @@ gulp.task('copyfonts', function() {
 
 // Less / CSS --------------------------------------------------------------------
 gulp.task('css', function () {
-	//
-	gulp.src(cfg.src.lessMainFile.path)
-		.pipe(plumber({errorHandler: handleErrors}))
-		.pipe(sourcemaps.init({loadMaps: true, debug: true}))
-		.pipe(less({
-			compress: true,
-			strictImports: true,
-			strictMath: true,
-			strictUnits: true,
-			plugins: [autoprefixPlugin]
-		}))
-		.pipe(rename({extname: cfg.dist.cssExtname})) // change extension
-		.pipe(sourcemaps.write('./')) // write the source map file at the same place
-		.pipe(gulp.dest(cfg.dist.cssDir));
+	
+	if(cfg.cssPreprocessors == 'less'){ // LESS ----------
+		gulp.src(cfg.src.lessMainFile.path)
+			.pipe(plumber({errorHandler: handleErrors}))
+			.pipe(sourcemaps.init({loadMaps: true, debug: true}))
+			.pipe(less({
+				compress: true,
+				strictImports: true,
+				strictMath: true,
+				strictUnits: true,
+				plugins: [autoprefixPlugin]
+			}))
+			.pipe(rename({extname: cfg.dist.cssExtname})) // change extension
+			.pipe(sourcemaps.write('./')) // write the source map file at the same place
+			.pipe(gulp.dest(cfg.dist.cssDir));
+	} else if(cfg.cssPreprocessors == 'sass'){ // SASS ----------
+		gulp.src(cfg.src.sassDir + '/**/*.scss')
+			.pipe(plumber({errorHandler: handleErrors}))
+			.pipe(sourcemaps.init({loadMaps: true, debug: true}))
+			.pipe(sass({
+				outputStyle: 'compressed'
+			}).on('error', sass.logError))
+			.pipe(rename({extname: cfg.dist.cssExtname})) // change extension
+			.pipe(sourcemaps.write('./')) // write the source map file at the same place
+			.pipe(gulp.dest(cfg.dist.cssDir))
+			.pipe(livereload());
+	}
 });
 
 // html --------------------------------------------------------------------
@@ -94,7 +110,17 @@ gulp.task('js:hint', function() {
 // Javascript --------------------------------------------------------------------
 // https://github.com/gulpjs/gulp/blob/master/docs/recipes/	
 gulp.task('js', ['js:hint'], function () {
+
+
+	/*var aliasifyConfig = {
+	    aliases: {
+	        "matchHeight": {"relative": "./vendor/jquery.matchHeight-min.js"}
+	    },
+	    verbose: true
+	};*/
+
 	browserify(cfg.src.jsMainFile.path)
+		//.transform(aliasify, aliasifyConfig)
 		.bundle()
 		//.pipe(plumber({errorHandler: handleErrors}))
 		.on('error', handleErrors)
@@ -173,5 +199,11 @@ function handleErrors(err) {
 	var plugin = (err.plugin) ? "[" +err.plugin.toString().red + "] " : '';
 	console.log(plugin + err.message.toString().bgRed);
 	beeper('*-*');
+
+	notifier.notify({
+	  'title': 'Oups',
+	  'message': plugin + err.message.toString()
+	});
+
 	this.emit('end');
 }

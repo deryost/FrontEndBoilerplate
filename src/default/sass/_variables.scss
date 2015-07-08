@@ -1,0 +1,17 @@
+$directoryMedia : "../medias";
+$directoryImages : "../img";
+
+$fontPrimary : Arial, sans-serif;
+$fontSecondary : 'Roboto', sans-serif;
+
+/* Content */
+$colorTextStandard : #333; // All basic text
+$colorAction : #ee2547; // Links, btn background, ...
+$colorActionHovered : darken($colorAction,15%); // Hover for : Links, btn background, ...
+$colorHeading : #01a4cf; // H1, H2, H3, and headings fakes
+$colorLabel : #002056; // Contains form label and media label like figcaption
+$colorSeparator : #dbe7f6; // Line separator like <hr> or table cell (/ table heading) border
+
+/* Gutters */
+$gutterMin : 10px;
+$gutter : 1em;
