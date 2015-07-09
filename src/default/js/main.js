@@ -1,13 +1,10 @@
 "use strict";
 
-global.jQuery = global.$ = require('jquery');
-
-//require('./vendor/respond.min.js'); // A fast & lightweight polyfill for min/max-width CSS3 Media Queries (for IE 6-8, and more)
-//require('./vendor/jquery.matchHeight-min.js');
-//require('./vendor/modernizr-2.8.3.min.js');
-
+var $ = require('jquery');
 require('matchHeight');
-//require('modernizr');
+require('modernizr');
+require('respond'); // A fast & lightweight polyfill for min/max-width CSS3 Media Queries (for IE 6-8, and more)
+//var echo = require('./vendor/echo.js');
 
 // Document Ready
 $(document).ready(function() {
@@ -32,7 +29,9 @@ $(document).ready(function() {
     $("#matchHeight .match").matchHeight(); 
 });
 
+/*
 // Document loaded
 $(window).load(function() {
  	
 });
+*/

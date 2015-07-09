@@ -4,14 +4,15 @@
   "description": "FrontEndBoilerplate",
   "main": "index.html",
   "scripts": {
+    "start": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "aliasify": "^1.7.2",
     "beeper": "^1.1.0",
     "browserify": "^10.2.4",
+    "browserify-shim": "^3.8.9",
     "colors": "^1.1.2",
     "del": "^1.2.0",
     "gulp": "^3.9.0",
@@ -36,11 +37,27 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "browser": {
-      "matchHeight": "./src/default/js/vendor/jquery.matchHeight-min.js"
+    "matchHeight": "./src/default/js/vendor/jquery.matchHeight-min.js",
+    "modernizr": "./src/default/js/vendor/modernizr-2.8.3.min.js",
+    "echo": "./src/default/js/vendor/echo.js",
+    "respond": "./src/default/js/vendor/respond.min.js"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "jquery": "$",
+    "./src/default/js/vendor/respond.min.js": "respond",
+    "./src/default/js/vendor/echo.js": "echo",
+    "./src/default/js/vendor/modernizr-2.8.3.min.js": "Modernizr",
+    "./src/default/js/vendor/jquery.matchHeight-min.js": {"depends": ["jquery:jQuery"]}
   },
   "dependencies": {
-    "gsap": "^1.17.0",
-    "jquery": "^2.*",
-    "underscore": "^1.8.3"
+    "jquery": "^1.*"
+  },
+  "gulpConfigs":{
+    "test":"allo mon coco"
   }
 }

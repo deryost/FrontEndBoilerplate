@@ -21,14 +21,20 @@ var buffer = require('vinyl-buffer');
 var sourcemaps = require('gulp-sourcemaps');
 var LessPluginAutoPrefix = require('less-plugin-autoprefix'), autoprefixPlugin = new LessPluginAutoPrefix({browsers: cfg.autoprefixerBrowsers});
 var beeper = require('beeper');
-//var aliasify = require('aliasify');
 var os = require("os");
 var notifier = require('node-notifier');
 
 // Log
 console.log("hostname: [" + os.hostname().grey.underline + "]" );
 
-// Run --------------------------------------------------------------------
+
+
+gulp.task("test", function(){
+	var packageJson = require('../package.json');
+	console.log(packageJson.config);
+});
+
+// Default --------------------------------------------------------------------
 gulp.task("default", cfg.defaultsTask, function(){});
 
 // clean --------------------------------------------------------------------
@@ -110,17 +116,7 @@ gulp.task('js:hint', function() {
 // Javascript --------------------------------------------------------------------
 // https://github.com/gulpjs/gulp/blob/master/docs/recipes/	
 gulp.task('js', ['js:hint'], function () {
-
-
-	/*var aliasifyConfig = {
-	    aliases: {
-	        "matchHeight": {"relative": "./vendor/jquery.matchHeight-min.js"}
-	    },
-	    verbose: true
-	};*/
-
 	browserify(cfg.src.jsMainFile.path)
-		//.transform(aliasify, aliasifyConfig)
 		.bundle()
 		//.pipe(plumber({errorHandler: handleErrors}))
 		.on('error', handleErrors)

@@ -23,11 +23,7 @@ cfg.src.lessMainFile.path 	= cfg.src.lessDir + cfg.src.lessMainFile.name ;
 cfg.src.jsMainFile 			= {};
 cfg.src.jsMainFile.name 	= "main.js"; // Main javascript file
 cfg.src.jsMainFile.path 	= cfg.src.jsDir + cfg.src.jsMainFile.name;
-cfg.src.jsVendorsFiles 		= [
-								cfg.src.jsDir + 'vendor/html5shiv.min.js', 
-								cfg.src.jsDir + 'vendor/respond.min.js', 
-								cfg.src.jsDir + 'vendor/modernizr-2.8.3.min.js'
-							  ];
+cfg.src.jsVendorsFiles 		= [];
 
 // Distribution
 cfg.dist = {};
@@ -72,7 +68,7 @@ cfg.jsHintOptions = {
 	"freeze" : true, // true: prohibits overwriting prototypes of native objects such as Array, Date etc.
 	"latedef" : false, // true: Require variables/functions to be defined before being used
 	"unused" : true, // true: Require all defined variables be used
-	"predef" : ["$"], // additional predefined global variables
+	"predef" : [], // additional predefined global variables
 	"strict" : true, // true: Requires all functions run in ES5 Strict Mode
 	"immed" : true, // true: Require immediate invocations to be wrapped in parens e.g. `(function () { } ());`
 	"maxlen" : false // {int} Max number of characters per line

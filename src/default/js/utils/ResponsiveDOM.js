@@ -4,6 +4,7 @@
 
 "use strict";
 
+var $ = require('jquery');
 var breakpoints = require('./Breakpoints');
 
 // Constructor

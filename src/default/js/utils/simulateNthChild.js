@@ -1,5 +1,7 @@
 "use strict";
 
+var $ = require('jquery');
+
 module.exports = function(containerSelector, elementSelector, prefix, nMax) {
 
 	var containers = $(containerSelector);
