@@ -28,18 +28,18 @@ var notifier = require('node-notifier');
 console.log("hostname: [" + os.hostname().grey.underline + "]" );
 
 
-
-gulp.task("test", function(){
-	var packageJson = require('../package.json');
-	console.log(packageJson.config);
-});
-
 // Default --------------------------------------------------------------------
 gulp.task("default", cfg.defaultsTask, function(){});
 
 // clean --------------------------------------------------------------------
 gulp.task('clean', function () {
 	del([cfg.dist.dir]);
+});
+
+// read Package JSON--------------------------------------------------------------------
+gulp.task("readPackage", function(){
+	var packageJson = require('../package.json');
+	console.log(packageJson.config);
 });
 
 // Images --------------------------------------------------------------------
@@ -75,7 +75,7 @@ gulp.task('css', function () {
 				strictUnits: true,
 				plugins: [autoprefixPlugin]
 			}))
-			.pipe(rename({extname: cfg.dist.cssExtname})) // change extension
+			.pipe(rename({extname: ".min.css"})) // change extension
 			.pipe(sourcemaps.write('./')) // write the source map file at the same place
 			.pipe(gulp.dest(cfg.dist.cssDir));
 	} else if(cfg.cssPreprocessors == 'sass'){ // SASS ----------
@@ -85,7 +85,7 @@ gulp.task('css', function () {
 			.pipe(sass({
 				outputStyle: 'compressed'
 			}).on('error', sass.logError))
-			.pipe(rename({extname: cfg.dist.cssExtname})) // change extension
+			.pipe(rename({extname: ".min.css"})) // change extension
 			.pipe(sourcemaps.write('./')) // write the source map file at the same place
 			.pipe(gulp.dest(cfg.dist.cssDir))
 			.pipe(livereload());
@@ -124,7 +124,7 @@ gulp.task('js', ['js:hint'], function () {
 		.pipe(buffer())
 		.pipe(sourcemaps.init())
 		.pipe(streamify(uglify()))
-		.pipe(rename({extname: cfg.dist.jsExtname})) // change extension
+		.pipe(rename({extname: ".min.js"})) // change extension
 		.pipe(sourcemaps.write('./'))
 		.pipe(gulp.dest(cfg.dist.jsDir));
 });
