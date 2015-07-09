@@ -170,10 +170,18 @@ gulp.task('watch', function () {
 	});
 
 	// Watch CSS
-	var watcherCSS = gulp.watch(cfg.src.lessDir + '/**/*.less', ['css']);
-	watcherCSS.on('change', function(event) {
-		console.log('Css File '+ event.path.green +' was '+ event.type.bgGreen.bold);
-	});
+	var watcherCSS;
+	if(cfg.cssPreprocessors == 'less'){ // LESS ----------
+		watcherCSS = gulp.watch(cfg.src.lessDir + '/**/*.less', ['css']);
+		watcherCSS.on('change', function(event) {
+			console.log('Css File '+ event.path.green +' was '+ event.type.bgGreen.bold);
+		});
+	} else if(cfg.cssPreprocessors == 'sass'){ // SASS ----------
+		watcherCSS = gulp.watch(cfg.src.sassDir + '/**/*.scss', ['css']);
+		watcherCSS.on('change', function(event) {
+			console.log('Css File '+ event.path.green +' was '+ event.type.bgGreen.bold);
+		});
+	}
 
 	// Watch Images
 	var watcherIMG = gulp.watch(cfg.src.imgDir + '/**/*.*', ['img']);
@@ -183,7 +191,7 @@ gulp.task('watch', function () {
 
 	livereload.listen();
   	gulp.watch(cfg.livereloadPaths).on('change', function(event) {
-		console.log('livereload.changed');
+		//console.log('livereload.changed');
 		livereload.changed(event);
 	});
 });
